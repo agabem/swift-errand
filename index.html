@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Errand - Quick Delivery Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <div class="nav-container">
+            <div class="nav-brand">Swift Errand</div>
+            <ul class="nav-links">
+                <li><a href="#overview" class="nav-link active">Overview</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#architecture" class="nav-link">Architecture</a></li>
+                <li><a href="#business-model" class="nav-link">Business Model</a></li>
+                <li><a href="#gtm" class="nav-link">GTM</a></li>
+                <li><a href="#risks" class="nav-link">Risks</a></li>
+                <li><a href="#ux" class="nav-link">UX Screens</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Metrics -->
+    <section id="overview" class="hero">
+        <div class="hero-content">
+            <h1>Swift Errand</h1>
+            <p class="tagline">Fast. Affordable. Reliable.</p>
+            <p class="description">
+                On-demand runner network connecting urgency-driven users with last-mile logistics in 5km radius, 15 minutes average
+            </p>
+        </div>
+
+        <div class="metrics-dashboard">
+            <div class="metric-card">
+                <div class="metric-value">5 km</div>
+                <div class="metric-label">Service Radius</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">15%</div>
+                <div class="metric-label">Platform Fee</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">₦250</div>
+                <div class="metric-label">Min Surcharge</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">250</div>
+                <div class="metric-label">Active Runners</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>5km Radius Coverage</h3>
+                <p>Hyperlocal delivery network optimized for quick pickups and drop-offs within 5 kilometers</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Real-time Tracking</h3>
+                <p>Live GPS tracking of your runner with instant notifications on status updates</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Transparent Pricing</h3>
+                <p>15% platform fee plus ₦250 minimum surcharge with no hidden costs</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Secure Handoff</h3>
+                <p>PIN-based verification ensures items reach the right person safely</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile First</h3>
+                <p>Optimized mobile experience for quick booking on the go</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Rating System</h3>
+                <p>Transparent feedback system for both users and runners</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture">
+        <h2>Architecture</h2>
+        
+        <div class="architecture-grid">
+            <!-- Orders Table -->
+            <div class="table-card">
+                <h3>Orders Table</h3>
+                <div class="table-layout">
+                    <div class="field">
+                        <span class="field-name">id</span>
+                        <span class="field-type uuid">UUID</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">user_id</span>
+                        <span class="field-type uuid">UUID</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">runner_id</span>
+                        <span class="field-type uuid">UUID</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">pickup_location</span>
+                        <span class="field-type geography">GEOGRAPHY</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">dropoff_location</span>
+                        <span class="field-type geography">GEOGRAPHY</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">status</span>
+                        <span class="field-type enum">ENUM</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">metadata</span>
+                        <span class="field-type jsonb">JSONB</span>
+                    </div>
+                    <div class="field">
+                        <span class="field-name">created_at</span>
+                        <span class="field-type timestamp">TIMESTAMP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task States -->
+            <div class="states-card">
+                <h3>Task States</h3>
+                <div class="states-list">
+                    <div class="state-pill pending">pending_assignment</div>
+                    <div class="state-pill accepted">runner_accepted</div>
+                    <div class="state-pill in-progress">in_transit</div>
+                    <div class="state-pill arriving">arriving</div>
+                    <div class="state-pill handoff">awaiting_handoff</div>
+                    <div class="state-pill completed">completed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Runners Table -->
+        <div class="table-card full-width">
+            <h3>Runners Table</h3>
+            <div class="table-layout">
+                <div class="field">
+                    <span class="field-name">id</span>
+                    <span class="field-type uuid">UUID</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">name</span>
+                    <span class="field-type text">VARCHAR</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">current_location</span>
+                    <span class="field-type geography">GEOGRAPHY</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">availability</span>
+                    <span class="field-type boolean">BOOLEAN</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">rating</span>
+                    <span class="field-type decimal">DECIMAL</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">completed_orders</span>
+                    <span class="field-type integer">INTEGER</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">metadata</span>
+                    <span class="field-type jsonb">JSONB</span>
+                </div>
+                <div class="field">
+                    <span class="field-name">updated_at</span>
+                    <span class="field-type timestamp">TIMESTAMP</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Section -->
+    <section id="business-model" class="business-model">
+        <h2>Business Model</h2>
+        
+        <div class="revenue-section">
+            <h3>Revenue Split: 85% User, 15% Platform</h3>
+            
+            <div class="revenue-visualization">
+                <div class="revenue-bar">
+                    <div class="revenue-segment runner">
+                        <span class="revenue-percent">85%</span>
+                    </div>
+                    <div class="revenue-segment platform">
+                        <span class="revenue-percent">15%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="revenue-breakdown">
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Amount</th>
+                            <th>Allocation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Platform Fee</td>
+                            <td>15% of order value</td>
+                            <td>Swift Errand</td>
+                        </tr>
+                        <tr>
+                            <td>Runner Payment</td>
+                            <td>85% of order value</td>
+                            <td>Runner</td>
+                        </tr>
+                        <tr>
+                            <td>Minimum Surcharge</td>
+                            <td>₦250 per delivery</td>
+                            <td>15% platform, 85% runner</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>VAT (on platform fee)</td>
+                            <td>7.5% of 15%</td>
+                            <td>Government</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>Infrastructure Costs</td>
+                            <td>~30% of platform fee</td>
+                            <td>Operations</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>Net Platform Revenue</td>
+                            <td>~70% of platform fee after costs</td>
+                            <td>Business</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- GTM Section -->
+    <section id="gtm" class="gtm">
+        <h2>Go-to-Market Strategy</h2>
+        
+        <div class="timeline">
+            <div class="phase phase-1">
+                <div class="phase-dot">●</div>
+                <div class="phase-content">
+                    <h3>Phase 1: Bootstrap & Validate</h3>
+                    <div class="timeline-tag">Months 1-2</div>
+                    <ul>
+                        <li>Launch in single neighborhood (Yaba, Lagos)</li>
+                        <li>Manual matching via WhatsApp + mobile web UI</li>
+                        <li>Target: 50 signups, 10 completed orders/day</li>
+                        <li>Validate unit economics and product-market fit</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="phase phase-2">
+                <div class="phase-dot">●</div>
+                <div class="phase-content">
+                    <h3>Phase 2: Automate & Scale Location</h3>
+                    <div class="timeline-tag">Months 3-4</div>
+                    <ul>
+                        <li>Automated runner assignment algorithm</li>
+                        <li>Expand to 3 neighborhoods (Yaba, VI, Ikoyi)</li>
+                        <li>Target: 200 signups, 50 daily orders</li>
+                        <li>Implement rating + identity verification</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="phase phase-3">
+                <div class="phase-dot">●</div>
+                <div class="phase-content">
+                    <h3>Phase 3: Expand & Monetize</h3>
+                    <div class="timeline-tag">Months 5-6</div>
+                    <ul>
+                        <li>Expand across entire Lagos Island</li>
+                        <li>Corporate partnerships (restaurants, retail)</li>
+                        <li>Target: 500 signups, 200+ daily orders</li>
+                        <li>Premium tier + API for merchants</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Risk Matrix Section -->
+    <section id="risks" class="risks">
+        <h2>Risk Matrix</h2>
+        
+        <div class="risk-grid">
+            <div class="risk-card high-high">
+                <div class="risk-icon">⚠️</div>
+                <h3>Runner Safety & Fraud</h3>
+                <div class="risk-level">High Impact / High Likelihood</div>
+                <p>Runners vulnerable to theft or assault; users may request illegal items</p>
+                <div class="mitigation">
+                    <strong>Mitigation:</strong> Background checks, insurance, in-app emergency button, trip recording
+                </div>
+            </div>
+
+            <div class="risk-card high-medium">
+                <div class="risk-icon">📍</div>
+                <h3>Unit Economics</h3>
+                <div class="risk-level">High Impact / Medium Likelihood</div>
+                <p>15% platform fee may not cover infrastructure, support, payment processing</p>
+                <div class="mitigation">
+                    <strong>Mitigation:</strong> Volume-driven margins, premium tier, B2B partnerships
+                </div>
+            </div>
+
+            <div class="risk-card high-low">
+                <div class="risk-icon">🔄</div>
+                <h3>Runner Retention</h3>
+                <div class="risk-level">High Impact / Low Likelihood</div>
+                <p>Runners may leave for better-paying platforms (Uber, Indriver)</p>
+                <div class="mitigation">
+                    <strong>Mitigation:</strong> Transparent earnings, quick payouts, leaderboards, bonuses
+                </div>
+            </div>
+
+            <div class="risk-card medium-high">
+                <div class="risk-icon">⚡</div>
+                <h3>Regulatory & Compliance</h3>
+                <div class="risk-level">Medium Impact / High Likelihood</div>
+                <p>FIRS tax compliance, insurance requirements, labor classification unclear</p>
+                <div class="mitigation">
+                    <strong>Mitigation:</strong> Legal counsel, tax escrow, flexible contractor model
+                </div>
+            </div>
+
+            <div class="risk-card medium-medium">
+                <div class="risk-icon">💰</div>
+                <h3>Payment Processing Costs</h3>
+                <div class="risk-level">Medium Impact / Medium Likelihood</div>
+                <p>Payment gateway fees (2-3%) reduce profitability further</p>
+                <div class="mitigation">
+                    <strong>Mitigation:</strong> Negotiate bulk rates, explore Flutterwave/Paystack partnerships
+                </div>
+            </div>
+
+            <div class="risk-card medium-low">
+                <div class="risk-icon">📱</div>
+                <h3>Market Competition</h3>
+                <div class="risk-level">Medium Impact / Low Likelihood</div>
+                <p>Larger players (Uber, Indriver) may copy model</p>
+                <div class="mitigation">
+                    <strong>Mitigation:</strong> Focus on ultra-local network effects, brand loyalty, niche focus
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UX Screens Section -->
+    <section id="ux" class="ux-screens">
+        <h2>UX Wireframes</h2>
+
+        <!-- Screen 1: Home -->
+        <div class="screens-container">
+            <div class="screen-frame">
+                <div class="frame-header">Home</div>
+                <div class="phone-frame">
+                    <div class="screen-content home-screen">
+                        <div class="header">Swift Errand</div>
+                        <div class="search-bar">
+                            <input type="text" placeholder="What do you need?">
+                        </div>
+                        <div class="quick-actions">
+                            <button class="action-btn">📦 Deliver Item</button>
+                            <button class="action-btn">🛍️ Shop Fetch</button>
+                            <button class="action-btn">🏃 Rush Service</button>
+                        </div>
+                        <div class="recent-orders">
+                            <div class="order-item">Lunch delivery from Jollof Rice Hub</div>
+                            <div class="order-item">Document pickup from office</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 2: Map View -->
+            <div class="screen-frame">
+                <div class="frame-header">Map & Runners</div>
+                <div class="phone-frame">
+                    <div class="screen-content map-screen">
+                        <div class="mock-map">
+                            <div class="pin pickup">📍 Pickup</div>
+                            <div class="pin reward">💰 Reward: ₦5,000</div>
+                            <div class="pin dropoff">🎯 Dropoff</div>
+                            <div class="runner-card">
+                                <div class="runner-avatar">👤</div>
+                                <div class="runner-info">
+                                    <div class="runner-name">Chisom</div>
+                                    <div class="runner-rating">⭐ 4.8 (127)</div>
+                                    <div class="runner-eta">ETA: 3 min</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Tasker Details -->
+            <div class="screen-frame">
+                <div class="frame-header">Tasker Card</div>
+                <div class="phone-frame">
+                    <div class="screen-content tasker-screen">
+                        <div class="tasker-header">📋 Order Details</div>
+                        <div class="detail-row">
+                            <span class="label">Pickup</span>
+                            <span class="value">25 Orogun Rd, Yaba</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Dropoff</span>
+                            <span class="value">15 Allen Ave, Ikeja</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Item</span>
+                            <span class="value">Electronics (fragile)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Reward</span>
+                            <span class="value amount">₦5,000</span>
+                        </div>
+                        <button class="btn-primary">Accept Task</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 4: PIN Handshake -->
+            <div class="screen-frame">
+                <div class="frame-header">PIN Verification</div>
+                <div class="phone-frame">
+                    <div class="screen-content pin-screen">
+                        <div class="pin-header">Verify Delivery</div>
+                        <p class="pin-instruction">Enter the PIN to confirm delivery</p>
+                        <div class="pin-input-container">
+                            <input type="text" class="pin-digit" maxlength="1" placeholder="•">
+                            <input type="text" class="pin-digit" maxlength="1" placeholder="•">
+                            <input type="text" class="pin-digit" maxlength="1" placeholder="•">
+                            <input type="text" class="pin-digit" maxlength="1" placeholder="•">
+                        </div>
+                        <p class="pin-hint">Sender will provide this PIN</p>
+                        <button class="btn-primary">Verify & Complete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Swift Errand. Fast. Affordable. Reliable.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
